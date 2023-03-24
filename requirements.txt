@@ -1,0 +1,3 @@
+shortuuid
+python-dotenv
+requests

@@ -20,15 +20,15 @@ class Chat():
                 print(f' {colors["bright_cyan"]}{chat["name"]} \n {colors["cyan"]}desc: {colors["reset"]}{chat["description"]}\n {colors["cyan"]}id: {colors["reset"]}{chat["id"]}\n')
 
     @staticmethod
-    def delete_chat(id):
+    def delete_chat(name):
         with open('chats.json', 'r') as f:
             chats = json.load(f)
             for chat in chats:
-                if chat['id'] == id:
+                if chat['name'] == name:
                     chats.remove(chat)
                     break
             else:
-                raise ValueError("No chat with that id exists.")
+                raise ValueError("No chat with that name exists.")
         with open('chats.json', 'w') as f:
             json.dump(chats, f)
 

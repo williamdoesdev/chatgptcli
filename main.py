@@ -19,14 +19,12 @@ def chat_loop(chat):
     while True:
         try:
             user_input = input(input_prefix)
-            print(f'user input: {user_input}')
             try:
-                args = shlex.split(user_input)
-                print(f'args: {args}')
+                args_list = shlex.split(user_input)
             except:
-                print('setting args to None')
-                args = None
-            if args:
+                args_list = None
+            if args_list:
+                args = parse_arguments(args_list)
                 handle_args(args)
             else:
                 output_prefix = f'{colors["grey"]}\u252C {colors["cyan"]}\u2699 {config.get_config("model")}\n{colors["grey"]}\u2514\u2500 {colors["bright_cyan"]}ChatGPT: {colors["bright_blue"]}'

@@ -23,7 +23,7 @@ def chat_loop(chat):
                 args_list = shlex.split(user_input)
             except:
                 args_list = None
-            if args_list:
+            if user_input.startswith('-') and args_list is not None:
                 args = parse_arguments(args_list)
                 handle_args(args)
             else:

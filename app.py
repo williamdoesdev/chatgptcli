@@ -1,8 +1,14 @@
-from src.cli.module import VALUE
+from src.cli import clear, title_bar
 
 def main():
-    print("Hello World")
-    print(VALUE)
+    while True:
+        try:
+            clear()
+            print(title_bar())
+            input()
+        except KeyboardInterrupt:
+            clear()
+            break
 
 if __name__ == '__main__':
     main()

@@ -1,9 +1,4 @@
-from shutil import get_terminal_size
-from re import search
-from typing import Union
-
-from src.config import CONFIG
-from src.config import set_config
+from src.config import MODEL
 
 BOT_PROMPT = ""
 USER_PROMPT = ""
@@ -25,6 +20,6 @@ RESET = "\033[0m"
 
 def bot_prompt(message: str) -> None:
     print(
-        f"""{GREY}┬ {BRIGHT_CYAN}{CONFIG['model']}
+        f"""{GREY}┬ {BRIGHT_CYAN}{MODEL}
         {GREY}└{BRIGHT_CYAN} Chat GPT:{RESET} {message}\n"""
         )

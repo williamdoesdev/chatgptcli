@@ -9,9 +9,10 @@ file_path = path.expanduser('~/.config/gpt/gpt.yml')
 
 if path.exists(file_path):
     with open(file_path, 'r') as file:
+        config = safe_load(file)
         try:
-            MODEL = safe_load(file)['model']
-            API_KEY = safe_load(file)['apiKey']
+            MODEL = config['model']
+            API_KEY = config['apiKey']
         except YAMLError as exc:
             print(f"Error parsing YAML file: {exc}")
         except KeyError as exc:

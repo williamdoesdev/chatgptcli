@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Union
 from json import loads
 
-from src.cli import bot_prompt, user_prompt
+from src.cli import bot_prompt
 
 class Role(Enum):
     USER = "user"
@@ -36,16 +36,7 @@ class Chat:
         self.__remove_old()
     
     def list(self) -> str:
-        return[message.dict() for message in self.messages if message.role != Role.DISPLAY_ONLY]  
-    
-    def print(self) -> None:
-        for message in self.messages:
-            if message.role == Role.ASSISTANT:
-                bot_prompt(message.content)
-            if message.role == Role.USER:
-                user_prompt(message.content)
-            if message.role == Role.DISPLAY_ONLY:
-                print(message.content)
+        return[message.dict() for message in self.messages]
     
     def save(self) -> None:
         with open("chat.json", "w") as file:
@@ -58,6 +49,9 @@ class Chat:
     @staticmethod
     def load() -> 'Chat':
         chat = Chat()
-        with open("chat.json", "r") as file:
-            chat.messages = [Message(Role(message["role"]), message["content"]) for message in loads(file.read())]
-        return chat
+        try:
+            with open("chat.json", "r") as file:
+                chat.messages = [Message(Role(message["role"]), message["content"]) for message in loads(file.read())]
+            return chat
+        except Exception:
+            return chat

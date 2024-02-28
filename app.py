@@ -1,8 +1,8 @@
 from sys import argv
 
-from src.cli import clear, title_bar, bot_prompt, input_prompt, check_for_commands
+from src.cli import bot_prompt
 from src.chat import Chat, Message, Role
-from src.openai import request
+from src.openai import request, format_response
 from src.config import check_create_config
 
 def main():
@@ -12,6 +12,7 @@ def main():
     chat.append(Message(Role.USER, prompt))
     chat = request(chat)
     chat.save()
+    bot_prompt(format_response(chat.messages[-1].content))
 
 if __name__ == '__main__':
     main()

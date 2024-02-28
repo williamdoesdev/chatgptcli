@@ -2,26 +2,25 @@ from requests import post
 from json import dumps, loads
 from typing import Union
 from re import findall, sub, DOTALL
-from copy import deepcopy
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import TerminalFormatter
 
 from src.chat import Chat, Message, Role
-from src.config import CONFIG
+from src.config import API_KEY, MODEL
 
 ENDPOINT = "https://api.openai.com/v1/chat/completions"
 PREAMBLE = r"If there are any code snippets in the response, please use the following format to display them: ```<language> <code>```\n. If there are not any snippets in the response, that's fine. Here is the actual prompt: "
 
 def request(chat: Union[Chat, None]) -> Chat:
     headers = {
-        'Authorization': f'Bearer {CONFIG["api_key"]}',
+        'Authorization': f'Bearer {API_KEY}',
         'Content-Type': 'application/json'
     }
 
     data = {
-        "model": CONFIG['model'],
+        "model": MODEL,
         "messages": chat.list() if chat is not None else []
     }
 

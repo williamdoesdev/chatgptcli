@@ -8,7 +8,6 @@ class Role(Enum):
     USER = "user"
     ASSISTANT = "assistant"
     SYSTEM = "system"
-    DISPLAY_ONLY = "display_only"
 
 class Message:
     role: Role
@@ -34,6 +33,7 @@ class Chat:
 
     def append(self, message: Message) -> None:
         self.messages.append(message)
+        self.__remove_old()
     
     def list(self) -> str:
         return[message.dict() for message in self.messages if message.role != Role.DISPLAY_ONLY]  
@@ -46,3 +46,18 @@ class Chat:
                 user_prompt(message.content)
             if message.role == Role.DISPLAY_ONLY:
                 print(message.content)
+    
+    def save(self) -> None:
+        with open("chat.json", "w") as file:
+            file.write(loads(self.list()))
+    
+    def __remove_old(self) -> None:
+        if len(self.messages) > 50:
+            self.messages = self.messages[-50:]            
+
+    @staticmethod
+    def load() -> 'Chat':
+        chat = Chat()
+        with open("chat.json", "r") as file:
+            chat.messages = [Message(Role(message["role"]), message["content"]) for message in loads(file.read())]
+        return chat

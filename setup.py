@@ -14,5 +14,7 @@ setup(
         'console_scripts': [
             'gpt=app:main'
         ],
-    }
+    },
+    package_data={'': ['chat.json']},
+    include_package_data=True
 )

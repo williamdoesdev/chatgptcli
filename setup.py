@@ -6,7 +6,9 @@ setup(
     packages=find_packages(),
     py_modules=['app'],
     install_requires=[
-        
+        'pyyaml',
+        'requests',
+        'pygments'
     ],
     entry_points={
         'console_scripts': [
